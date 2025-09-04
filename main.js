@@ -1,38 +1,29 @@
-const toggleBtn = document.querySelectorAll('.item__btn');
+const ul = document.querySelector('.faq__list');
 const answers = document.querySelectorAll('.item__content');
 const minusBtn = document.querySelectorAll('.btnImg');
+const h3 = document.querySelectorAll('.item__title');
 
-//Step 1: hardcoding
-// toggleBtn[0].addEventListener('click', () => {
-//   answers[0].classList.toggle('show__answer');
-
-//   let result = answers[0].classList.contains('show__answer');
-//   if (result) {
-//     minusBtn[0].src = './assets/images/icon-minus.svg';
-//   } else {
-//     minusBtn[0].src = './assets/images/icon-plus.svg';
-//   }
-// });
-
-// Setp 2: for statement + function
 function changeImg(i) {
   let result = answers[i].classList.contains('show__answer');
-  if (result) {
-    minusBtn[i].src = './assets/images/icon-minus.svg';
-  } else {
-    minusBtn[i].src = './assets/images/icon-plus.svg';
+
+  result
+    ? (minusBtn[i].src = './assets/images/icon-minus.svg')
+    : (minusBtn[i].src = './assets/images/icon-plus.svg');
+}
+
+ul.addEventListener('click', (e) => {
+  let id = e.target.dataset.id;
+
+  if (id) {
+    answers[+id].classList.toggle('show__answer');
+    changeImg(+id);
   }
-}
+});
 
-for (let i = 0; i < toggleBtn.length; i++) {
-  toggleBtn[i].addEventListener('click', () => {
-    answers[i].classList.toggle('show__answer');
+// mobile active state event
+ul.addEventListener('touchstart', (e) => {
+  let id = e.target.dataset.id;
+  let result = answers[+id].classList.contains('show__answer');
 
-    changeImg(i);
-  });
-}
-
-//working on: for more clean code
-// toggleBtn.forEach((btn) => {
-//   btn.addEventListener('click', () => {});
-// });
+  result ? h3[+id].classList.remove('active') : h3[+id].classList.add('active');
+});
